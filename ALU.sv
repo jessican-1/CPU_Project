@@ -1,7 +1,7 @@
 module ALU (
-    input [7:0] a, b,
+    input [31:0] a, b,
     input [2:0] op,
-    output reg [7:0] y,
+    output reg [31:0] y,
     output z,
     output n,
     output c,
@@ -22,8 +22,8 @@ always @(*) begin
 end
 
 assign z = (y == 0); //zero
-assign n = y[7];    //negative
+assign n = y[31];    //negative
 assign c = cout;    //unsigned overflow, carry out
-assign v = (a[7] == b[7]) && (y[7] != a[7]);//signed overflow (1+127 -> -128)
+assign v = (a[31] == b[31]) && (y[31] != a[31]);//signed overflow (1+127 -> -128)
 
 endmodule

@@ -1,26 +1,62 @@
-module main_decoder(op, zero, regWrite, MemWrite, ResultSrc, ALUsrc, ImmSrc, ALUOp, PCSrc)
-    //opcode from instruction, zero from ALU for branching, regWrite write to register file, MemWrite to memory, ResultSrc where result comes from, ALUSrc ALU input source, ImmSrc, how to interpret immediate, ALUOp is opcode
-    input zero;
-    input [6:0] op;
-    output RegWrite, MemWrite, ResultSrc, PCSrc;
-    output[1:0] ImmSrc, ALUop;
+module main_decoder(
+    input        zero,
+    input  [6:0] op,
+
+    output       RegWrite,
+    output       MemWrite,
+    output       ResultSrc,
+    output       ALUSrc,
+    output       PCSrc,
+    output [1:0] ImmSrc,
+    output [1:0] ALUOp
+);
 
     wire branch;
-    //7'b0110011 -> R-type, 7'b0000011 → LOAD, 7'b0100011 → STORE, 7'b1100011 → BRANCH
-    assign RegWrite = ((op == 7'b0000011) | (op == 7'b0110011)) ? 1'b1 : 1'b0; //add and load
-    //Load or R-type
-    assign MemWrite = (op == 7'b0100011) ? 1'b1 : 1'b0; 
-    //Store
-    assign ResultSrc = (op == 7'b0000011) ? 1'b1 : 1'b0;
-    //Load
-    assign ALUSrc = ((op == 7'b0000011) | (op == 7'b0100011)) ? 1'b1 : 1'b0;
-    //Load or Store
-    assign branch = (op == 7'b1100011) ? 1'b1 : 1'b0;
-    //Branch
-    assign ImmSrc = (op == 7'b0100011) ? 2'b01 : (op == 7'b1100011) ? 2'b10 : 2'b00;
-    //Store
-    assign ALUOp = (op == 7'b0110011) ? 2'b10 : (op == 7'b1100011) ? 2'b01 : 2'b00;
-    //R-Type -> 10, Branch -> 01, else -> 00
+
+    // 7'b0110011 -> R-type
+    // 7'b0000011 -> LOAD
+    // 7'b0100011 -> STORE
+    // 7'b1100011 -> BRANCH
+
+    // Register write enable
+    assign RegWrite =
+        ((op == 7'b0000011) || (op == 7'b0110011)) ? 1'b1 : 1'b0;
+
+    // Memory write enable
+    assign MemWrite =
+        (op == 7'b0100011) ? 1'b1 : 1'b0;
+
+    // Result source (1 = memory, 0 = ALU)
+    assign ResultSrc =
+        (op == 7'b0000011) ? 1'b1 : 1'b0;
+
+    // ALU source (1 = immediate, 0 = register)
+    assign ALUSrc =
+        ((op == 7'b0000011) || (op == 7'b0100011)) ? 1'b1 : 1'b0;
+
+    // Branch instruction detect
+    assign branch =
+        (op == 7'b1100011) ? 1'b1 : 1'b0;
+
+    // Immediate source select
+    // 00 = I-type
+    // 01 = S-type
+    // 10 = B-type
+    assign ImmSrc =
+        (op == 7'b0100011) ? 2'b01 :
+        (op == 7'b1100011) ? 2'b10 :
+        2'b00;
+
+    // ALU operation select
+    // 00 = add (load/store)
+    // 01 = subtract/branch compare
+    // 10 = R-type decode
+    assign ALUOp =
+        (op == 7'b0110011) ? 2'b10 :
+        (op == 7'b1100011) ? 2'b01 :
+        2'b00;
+
+    // PC source control
     assign PCSrc = zero & branch;
-    //Jump only if branch and ALU condition is true
+
 endmodule
