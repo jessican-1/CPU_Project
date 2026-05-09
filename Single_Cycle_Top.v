@@ -8,77 +8,82 @@
 `include "PC_Adder.v"
 `include "Mux.v"
 
-module Single_Cycle_Top(
-    input clk,
-    input rst
-);
+module Single_Cycle_Top(clk, rst);
 
-    // Wires
-    wire [31:0] PC_Top;
-    wire [31:0] RD_Instr;
-    wire [31:0] RD1_Top;
-    wire [31:0] RD2_Top;
-    wire [31:0] Imm_Ext_Top;
-    wire [31:0] SrcB;
-    wire [31:0] ALUResult;
-    wire [31:0] ReadData;
-    wire [31:0] Result;
-    wire [31:0] PCPlus4;
+    input clk, rst;
 
-    wire RegWrite;
-    wire MemWrite;
-    wire ALUSrc;
-    wire ResultSrc;
-
+    // Internal Wires
+    wire [31:0] PC_Top, RD_Instr, RD1_Top, RD2_Top, Imm_Ext_Top;
+    wire [31:0] ALUResult, ReadData, Result, SrcB;
+    wire [31:0] PCPlus4, PCTarget, PC_Next; // PC Path Wires
+    
+    wire RegWrite, MemWrite, ALUSrc, ResultSrc, Branch, Zero, PCSrc;
     wire [1:0] ImmSrc;
     wire [2:0] ALUControl_Top;
 
-    // Program Counter
-    PC_Module PC(
-        .clk(clk),
-        .rst(rst),
-        .PC(PC_Top),
-        .PC_Next(PCPlus4)
-    );
+    // --- PC Logic ---
+    
+    // PCSrc Decision: Jump if it's a Branch AND the ALU says Zero
+    assign PCSrc = Branch & Zero;
 
-    // PC + 4 Adder
-    PC_Adder PC_Adder(
+    // Standard PC+4 Adder
+    PC_Adder PC_Adder_Plus4(
         .a(PC_Top),
         .b(32'd4),
         .c(PCPlus4)
     );
-    
-    // Instruction Memory
+
+    // Branch Target Adder (PC + Imm_Ext)
+    PC_Adder PC_Adder_Target(
+        .a(PC_Top),
+        .b(Imm_Ext_Top),
+        .c(PCTarget)
+    );
+
+    // Mux to select between PC+4 or Branch Target
+    Mux PC_Mux(
+        .a(PCPlus4),
+        .b(PCTarget),
+        .s(PCSrc),
+        .c(PC_Next)
+    );
+
+    // The actual PC Register
+    PC_Module PC(
+        .clk(clk),
+        .rst(rst),
+        .PC(PC_Top),
+        .PC_Next(PC_Next)
+    );
+
+    // --- Instruction & Data Paths ---
+
     Instruction_Memory Instruction_Memory(
         .rst(rst),
         .A(PC_Top),
         .RD(RD_Instr)
     );
 
-    // Register File
     Register_File Register_File(
         .clk(clk),
         .rst(rst),
-
         .WE3(RegWrite),
         .WD3(Result),
-
         .A1(RD_Instr[19:15]),
         .A2(RD_Instr[24:20]),
         .A3(RD_Instr[11:7]),
-
         .RD1(RD1_Top),
         .RD2(RD2_Top)
     );
 
-    // Immediate Generator
+    // Connected full 2-bit ImmSrc
     Sign_Extend Sign_Extend(
         .In(RD_Instr),
-        .ImmSrc(ImmSrc),
+        .ImmSrc(ImmSrc), 
         .Imm_Ext(Imm_Ext_Top)
     );
 
-    // ALU Source Mux
+    // Select between Register RD2 or Immediate for ALU input
     Mux Mux_Register_to_ALU(
         .a(RD2_Top),
         .b(Imm_Ext_Top),
@@ -86,52 +91,40 @@ module Single_Cycle_Top(
         .c(SrcB)
     );
 
-    // ALU
     ALU ALU(
         .A(RD1_Top),
         .B(SrcB),
-        .Result(ALUResult),
-
         .ALUControl(ALUControl_Top),
-
+        .Result(ALUResult),
+        .Zero(Zero), // Connected to PCSrc Logic
         .OverFlow(),
         .Carry(),
-        .Zero(),
         .Negative()
     );
 
-    // Control Unit
     Control_Unit_Top Control_Unit_Top(
         .Op(RD_Instr[6:0]),
-
+        .funct3(RD_Instr[14:12]),
+        .funct7(RD_Instr[31:25]), // Fixed: funct7 is usually top bits
         .RegWrite(RegWrite),
         .ImmSrc(ImmSrc),
         .ALUSrc(ALUSrc),
         .MemWrite(MemWrite),
         .ResultSrc(ResultSrc),
-
-        .Branch(),
-
-        .funct3(RD_Instr[14:12]),
-        .funct7(RD_Instr[31:25]),
-
+        .Branch(Branch), // Connected to PCSrc Logic
         .ALUControl(ALUControl_Top)
     );
 
-    // Data Memory
     Data_Memory Data_Memory(
         .clk(clk),
         .rst(rst),
-
         .WE(MemWrite),
-
-        .WD(RD2_Top),
         .A(ALUResult),
-
+        .WD(RD2_Top),
         .RD(ReadData)
     );
 
-    // Write Back Mux
+    // Select between ALU Result or Memory Data for Register Writeback
     Mux Mux_DataMemory_to_Register(
         .a(ALUResult),
         .b(ReadData),
