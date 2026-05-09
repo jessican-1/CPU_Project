@@ -2,7 +2,7 @@
 
 A custom RISC-V inspired single-cycle CPU architecture. This project implements a functional datapath including an ALU, Control Unit, Register File, and Data Memory, based on the principles outlined in the "RISC-V: From Transistors to AI" series.
 
-## 🚀 Project Overview
+## Project Overview
 
 This repository contains the hardware description (Verilog/SystemVerilog) for a single-cycle RISC-V CPU and a custom Python-based assembler to bridge the gap between human-readable assembly and machine code.
 
@@ -13,7 +13,7 @@ This repository contains the hardware description (Verilog/SystemVerilog) for a 
 
 ---
 
-## 🛠 Supported Instruction Set
+## Supported Instruction Set
 
 The CPU supports a subset of the RISC-V RV32I base integer instruction set.
 
@@ -35,7 +35,7 @@ The CPU supports a subset of the RISC-V RV32I base integer instruction set.
 
 ---
 
-## 💻 Getting Started
+## Getting Started
 
 ### Prerequisites
 - Python 3.x (for the assembler)
@@ -67,7 +67,7 @@ When viewing waveforms in **GTKWave**, monitor the following signals:
 
 ---
 
-## 📂 Project Structure
+## Project Structure
 - `/Programs`: Contains example `.asm` files for testing.
 - `assembler.py`: Python tool to convert assembly to hex.
 - `program.asm`: The main input file for the assembler.
@@ -76,5 +76,5 @@ When viewing waveforms in **GTKWave**, monitor the following signals:
 
 ---
 
-## 🎓 Acknowledgments
+## Acknowledgments
 Inspired by the YouTube series *"RISC-V: From Transistors to AI"*.
