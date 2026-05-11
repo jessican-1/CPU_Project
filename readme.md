@@ -2,6 +2,10 @@
 
 A custom RISC-V inspired single-cycle CPU architecture. This project implements a functional datapath including an ALU, Control Unit, Register File, and Data Memory, based on the principles outlined in the "RISC-V: From Transistors to AI" series.
 
+
+## Simplfied CPU Diagram
+![alt text](<Final project.png>)
+
 ## Project Overview
 
 This repository contains the hardware description (Verilog/SystemVerilog) for a single-cycle RISC-V CPU and a custom Python-based assembler to bridge the gap between human-readable assembly and machine code.
