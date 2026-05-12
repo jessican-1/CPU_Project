@@ -7,6 +7,7 @@
 `include "Data_Memory.v"
 `include "PC_Adder.v"
 `include "Mux.v"
+`include "Cache.v"
 
 module Single_Cycle_Top(clk, rst);
 
@@ -20,6 +21,11 @@ module Single_Cycle_Top(clk, rst);
     wire RegWrite, MemWrite, ALUSrc, ResultSrc, Branch, Zero, PCSrc;
     wire [1:0] ImmSrc;
     wire [2:0] ALUControl_Top;
+
+    // Cache wires
+    wire [31:0] Cache_RD;
+    wire Cache_Hit;
+    wire [31:0] Final_Mem_Data;
 
     // --- PC Logic ---
     
@@ -123,6 +129,15 @@ module Single_Cycle_Top(clk, rst);
         .WD(RD2_Top),
         .RD(ReadData)
     );
+
+    // Cache
+    Cache Data_Cache(
+        .clk(clk), .rst(rst), .Address(ALUResult), .WriteData(RD2_Top),
+        .WE(MemWrite), .ReadData(Cache_RD), .Hit(Cache_Hit)
+    );
+    
+    //hit/miss
+    assign Final_Mem_Data = (Cache_Hit) ? Cache_RD : ReadData;
 
     // Select between ALU Result or Memory Data for Register Writeback
     Mux Mux_DataMemory_to_Register(
