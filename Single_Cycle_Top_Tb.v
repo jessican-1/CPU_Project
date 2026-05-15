@@ -44,6 +44,8 @@ module Single_Cycle_Top_Tb ();
         $dumpvars(0, dut.Register_File.Register[29]);
         $dumpvars(0, dut.Register_File.Register[30]);
         $dumpvars(0, dut.Register_File.Register[31]);
+        $dumpvars(0, dut.Data_Memory.mem[16]);
+        $dumpvars(0, dut.Data_Memory.mem[17]);
     end
 
 
@@ -63,7 +65,7 @@ module Single_Cycle_Top_Tb ();
         #150;
 
         rst <=1'b1;
-        #2500;
+        #7500;
         $finish;
     end
     

@@ -146,7 +146,7 @@ module Single_Cycle_Top(clk, rst);
 
     // Select between ALU Result, Memory Data, or PC+4 Register Writeback
     assign Result = (ResultSrc == 2'b10) ? PCPlus4 : 
-                    (ResultSrc == 2'b01) ? Final_Mem_Data : 
+                    (ResultSrc == 2'b01) ? ReadData : // Final_Mem_Data is incorrect 
                     ALUResult;
 
     /*
