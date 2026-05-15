@@ -1,0 +1,831 @@
+$date
+	Thu May 14 23:49:35 2026
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1ps
+$end
+$scope module Single_Cycle_Top_Tb $end
+$var reg 1 ! clk $end
+$var reg 1 " rst $end
+$scope module dut $end
+$var wire 1 # Jump $end
+$var wire 1 $ PCSrc $end
+$var wire 1 ! clk $end
+$var wire 1 " rst $end
+$var wire 1 % Zero $end
+$var wire 32 & SrcB [31:0] $end
+$var wire 2 ' ResultSrc [1:0] $end
+$var wire 32 ( Result [31:0] $end
+$var wire 1 ) RegWrite $end
+$var wire 32 * ReadData [31:0] $end
+$var wire 32 + RD_Instr [31:0] $end
+$var wire 32 , RD2_Top [31:0] $end
+$var wire 32 - RD1_Top [31:0] $end
+$var wire 32 . PC_Top [31:0] $end
+$var wire 32 / PC_Next [31:0] $end
+$var wire 32 0 PCTarget [31:0] $end
+$var wire 32 1 PCPlus4 [31:0] $end
+$var wire 1 2 MemWrite $end
+$var wire 32 3 Imm_Ext_Top [31:0] $end
+$var wire 2 4 ImmSrc [1:0] $end
+$var wire 32 5 Final_Mem_Data [31:0] $end
+$var wire 32 6 Cache_RD [31:0] $end
+$var wire 1 7 Cache_Hit $end
+$var wire 1 8 Branch $end
+$var wire 32 9 Actual_Jump_Target [31:0] $end
+$var wire 1 : ALUSrc $end
+$var wire 32 ; ALUResult [31:0] $end
+$var wire 3 < ALUControl_Top [2:0] $end
+$scope module ALU $end
+$var wire 1 = Carry $end
+$var wire 1 > OverFlow $end
+$var wire 1 % Zero $end
+$var wire 32 ? Sum [31:0] $end
+$var wire 32 @ Result [31:0] $end
+$var wire 1 A Negative $end
+$var wire 1 B Cout $end
+$var wire 32 C B [31:0] $end
+$var wire 3 D ALUControl [2:0] $end
+$var wire 32 E A [31:0] $end
+$upscope $end
+$scope module Control_Unit_Top $end
+$var wire 7 F Op [6:0] $end
+$var wire 3 G funct3 [2:0] $end
+$var wire 7 H funct7 [6:0] $end
+$var wire 2 I ResultSrc [1:0] $end
+$var wire 1 ) RegWrite $end
+$var wire 1 2 MemWrite $end
+$var wire 1 J Jump $end
+$var wire 2 K ImmSrc [1:0] $end
+$var wire 1 8 Branch $end
+$var wire 1 : ALUSrc $end
+$var wire 2 L ALUOp [1:0] $end
+$var wire 3 M ALUControl [2:0] $end
+$scope module u_ALU_Decoder $end
+$var wire 3 N funct3 [2:0] $end
+$var wire 7 O funct7 [6:0] $end
+$var wire 7 P op [6:0] $end
+$var wire 2 Q ALUOp [1:0] $end
+$var reg 3 R ALUControl [2:0] $end
+$upscope $end
+$scope module u_Main_Decoder $end
+$var wire 7 S Op [6:0] $end
+$var wire 2 T ResultSrc [1:0] $end
+$var wire 1 ) RegWrite $end
+$var wire 1 2 MemWrite $end
+$var wire 1 J Jump $end
+$var wire 2 U ImmSrc [1:0] $end
+$var wire 1 8 Branch $end
+$var wire 1 : ALUSrc $end
+$var wire 2 V ALUOp [1:0] $end
+$upscope $end
+$upscope $end
+$scope module Data_Cache $end
+$var wire 32 W Address [31:0] $end
+$var wire 1 7 Hit $end
+$var wire 32 X ReadData [31:0] $end
+$var wire 1 2 WE $end
+$var wire 1 ! clk $end
+$var wire 1 " rst $end
+$var wire 20 Y tag [19:0] $end
+$var wire 6 Z index [5:0] $end
+$var wire 32 [ WriteData [31:0] $end
+$var reg 64 \ valid_bits [63:0] $end
+$upscope $end
+$scope module Data_Memory $end
+$var wire 32 ] A [31:0] $end
+$var wire 32 ^ RD [31:0] $end
+$var wire 1 2 WE $end
+$var wire 1 ! clk $end
+$var wire 1 " rst $end
+$var wire 10 _ addr [9:0] $end
+$var wire 32 ` WD [31:0] $end
+$upscope $end
+$scope module Instruction_Memory $end
+$var wire 1 " rst $end
+$var wire 32 a RD [31:0] $end
+$var wire 32 b A [31:0] $end
+$upscope $end
+$scope module Mux_Register_to_ALU $end
+$var wire 1 : s $end
+$var wire 32 c c [31:0] $end
+$var wire 32 d b [31:0] $end
+$var wire 32 e a [31:0] $end
+$upscope $end
+$scope module PC $end
+$var wire 1 ! clk $end
+$var wire 1 " rst $end
+$var wire 32 f PC_Next [31:0] $end
+$var reg 32 g PC [31:0] $end
+$upscope $end
+$scope module PC_Adder_Plus4 $end
+$var wire 32 h a [31:0] $end
+$var wire 32 i b [31:0] $end
+$var wire 32 j c [31:0] $end
+$upscope $end
+$scope module PC_Adder_Target $end
+$var wire 32 k a [31:0] $end
+$var wire 32 l c [31:0] $end
+$var wire 32 m b [31:0] $end
+$upscope $end
+$scope module PC_Mux $end
+$var wire 32 n a [31:0] $end
+$var wire 32 o b [31:0] $end
+$var wire 1 $ s $end
+$var wire 32 p c [31:0] $end
+$upscope $end
+$scope module Register_File $end
+$var wire 5 q A1 [4:0] $end
+$var wire 5 r A2 [4:0] $end
+$var wire 5 s A3 [4:0] $end
+$var wire 32 t WD3 [31:0] $end
+$var wire 1 ) WE3 $end
+$var wire 1 ! clk $end
+$var wire 1 " rst $end
+$var wire 32 u RD2 [31:0] $end
+$var wire 32 v RD1 [31:0] $end
+$var integer 32 w i [31:0] $end
+$upscope $end
+$scope module Sign_Extend $end
+$var wire 2 x ImmSrc [1:0] $end
+$var wire 32 y In [31:0] $end
+$var reg 32 z Imm_Ext [31:0] $end
+$upscope $end
+$upscope $end
+$upscope $end
+$scope module Single_Cycle_Top_Tb $end
+$scope module dut $end
+$scope module Register_File $end
+$var reg 32 { \Register[0] [31:0] $end
+$upscope $end
+$upscope $end
+$upscope $end
+$scope module Single_Cycle_Top_Tb $end
+$scope module dut $end
+$scope module Register_File $end
+$var reg 32 | \Register[1] [31:0] $end
+$upscope $end
+$upscope $end
+$upscope $end
+$scope module Single_Cycle_Top_Tb $end
+$scope module dut $end
+$scope module Register_File $end
+$var reg 32 } \Register[2] [31:0] $end
+$upscope $end
+$upscope $end
+$upscope $end
+$scope module Single_Cycle_Top_Tb $end
+$scope module dut $end
+$scope module Register_File $end
+$var reg 32 ~ \Register[3] [31:0] $end
+$upscope $end
+$upscope $end
+$upscope $end
+$scope module Single_Cycle_Top_Tb $end
+$scope module dut $end
+$scope module Register_File $end
+$var reg 32 !" \Register[4] [31:0] $end
+$upscope $end
+$upscope $end
+$upscope $end
+$scope module Single_Cycle_Top_Tb $end
+$scope module dut $end
+$scope module Register_File $end
+$var reg 32 "" \Register[5] [31:0] $end
+$upscope $end
+$upscope $end
+$upscope $end
+$scope module Single_Cycle_Top_Tb $end
+$scope module dut $end
+$scope module Register_File $end
+$var reg 32 #" \Register[6] [31:0] $end
+$upscope $end
+$upscope $end
+$upscope $end
+$scope module Single_Cycle_Top_Tb $end
+$scope module dut $end
+$scope module Register_File $end
+$var reg 32 $" \Register[7] [31:0] $end
+$upscope $end
+$upscope $end
+$upscope $end
+$scope module Single_Cycle_Top_Tb $end
+$scope module dut $end
+$scope module Register_File $end
+$var reg 32 %" \Register[8] [31:0] $end
+$upscope $end
+$upscope $end
+$upscope $end
+$scope module Single_Cycle_Top_Tb $end
+$scope module dut $end
+$scope module Register_File $end
+$var reg 32 &" \Register[9] [31:0] $end
+$upscope $end
+$upscope $end
+$upscope $end
+$scope module Single_Cycle_Top_Tb $end
+$scope module dut $end
+$scope module Register_File $end
+$var reg 32 '" \Register[10] [31:0] $end
+$upscope $end
+$upscope $end
+$upscope $end
+$scope module Single_Cycle_Top_Tb $end
+$scope module dut $end
+$scope module Register_File $end
+$var reg 32 (" \Register[11] [31:0] $end
+$upscope $end
+$upscope $end
+$upscope $end
+$scope module Single_Cycle_Top_Tb $end
+$scope module dut $end
+$scope module Register_File $end
+$var reg 32 )" \Register[12] [31:0] $end
+$upscope $end
+$upscope $end
+$upscope $end
+$scope module Single_Cycle_Top_Tb $end
+$scope module dut $end
+$scope module Register_File $end
+$var reg 32 *" \Register[13] [31:0] $end
+$upscope $end
+$upscope $end
+$upscope $end
+$scope module Single_Cycle_Top_Tb $end
+$scope module dut $end
+$scope module Register_File $end
+$var reg 32 +" \Register[14] [31:0] $end
+$upscope $end
+$upscope $end
+$upscope $end
+$scope module Single_Cycle_Top_Tb $end
+$scope module dut $end
+$scope module Register_File $end
+$var reg 32 ," \Register[15] [31:0] $end
+$upscope $end
+$upscope $end
+$upscope $end
+$scope module Single_Cycle_Top_Tb $end
+$scope module dut $end
+$scope module Register_File $end
+$var reg 32 -" \Register[16] [31:0] $end
+$upscope $end
+$upscope $end
+$upscope $end
+$scope module Single_Cycle_Top_Tb $end
+$scope module dut $end
+$scope module Register_File $end
+$var reg 32 ." \Register[17] [31:0] $end
+$upscope $end
+$upscope $end
+$upscope $end
+$scope module Single_Cycle_Top_Tb $end
+$scope module dut $end
+$scope module Register_File $end
+$var reg 32 /" \Register[18] [31:0] $end
+$upscope $end
+$upscope $end
+$upscope $end
+$scope module Single_Cycle_Top_Tb $end
+$scope module dut $end
+$scope module Register_File $end
+$var reg 32 0" \Register[19] [31:0] $end
+$upscope $end
+$upscope $end
+$upscope $end
+$scope module Single_Cycle_Top_Tb $end
+$scope module dut $end
+$scope module Register_File $end
+$var reg 32 1" \Register[20] [31:0] $end
+$upscope $end
+$upscope $end
+$upscope $end
+$scope module Single_Cycle_Top_Tb $end
+$scope module dut $end
+$scope module Register_File $end
+$var reg 32 2" \Register[21] [31:0] $end
+$upscope $end
+$upscope $end
+$upscope $end
+$scope module Single_Cycle_Top_Tb $end
+$scope module dut $end
+$scope module Register_File $end
+$var reg 32 3" \Register[22] [31:0] $end
+$upscope $end
+$upscope $end
+$upscope $end
+$scope module Single_Cycle_Top_Tb $end
+$scope module dut $end
+$scope module Register_File $end
+$var reg 32 4" \Register[23] [31:0] $end
+$upscope $end
+$upscope $end
+$upscope $end
+$scope module Single_Cycle_Top_Tb $end
+$scope module dut $end
+$scope module Register_File $end
+$var reg 32 5" \Register[24] [31:0] $end
+$upscope $end
+$upscope $end
+$upscope $end
+$scope module Single_Cycle_Top_Tb $end
+$scope module dut $end
+$scope module Register_File $end
+$var reg 32 6" \Register[25] [31:0] $end
+$upscope $end
+$upscope $end
+$upscope $end
+$scope module Single_Cycle_Top_Tb $end
+$scope module dut $end
+$scope module Register_File $end
+$var reg 32 7" \Register[26] [31:0] $end
+$upscope $end
+$upscope $end
+$upscope $end
+$scope module Single_Cycle_Top_Tb $end
+$scope module dut $end
+$scope module Register_File $end
+$var reg 32 8" \Register[27] [31:0] $end
+$upscope $end
+$upscope $end
+$upscope $end
+$scope module Single_Cycle_Top_Tb $end
+$scope module dut $end
+$scope module Register_File $end
+$var reg 32 9" \Register[28] [31:0] $end
+$upscope $end
+$upscope $end
+$upscope $end
+$scope module Single_Cycle_Top_Tb $end
+$scope module dut $end
+$scope module Register_File $end
+$var reg 32 :" \Register[29] [31:0] $end
+$upscope $end
+$upscope $end
+$upscope $end
+$scope module Single_Cycle_Top_Tb $end
+$scope module dut $end
+$scope module Register_File $end
+$var reg 32 ;" \Register[30] [31:0] $end
+$upscope $end
+$upscope $end
+$upscope $end
+$scope module Single_Cycle_Top_Tb $end
+$scope module dut $end
+$scope module Register_File $end
+$var reg 32 <" \Register[31] [31:0] $end
+$upscope $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+$comment Show the parameter values. $end
+$dumpall
+$end
+#0
+$dumpvars
+bx <"
+bx ;"
+bx :"
+bx 9"
+bx 8"
+bx 7"
+bx 6"
+bx 5"
+bx 4"
+bx 3"
+bx 2"
+bx 1"
+bx 0"
+bx /"
+bx ."
+bx -"
+bx ,"
+bx +"
+bx *"
+bx )"
+bx ("
+bx '"
+bx &"
+bx %"
+bx $"
+bx #"
+bx ""
+bx !"
+bx ~
+bx }
+bx |
+bx {
+b0 z
+b0 y
+b0 x
+bx w
+b0 v
+b0 u
+b0 t
+b0 s
+b0 r
+b0 q
+bx p
+bx o
+bx n
+b0 m
+bx l
+bx k
+bx j
+b100 i
+bx h
+bx g
+bx f
+b0 e
+b0 d
+b0 c
+bx b
+b0 a
+b0 `
+b0 _
+bx ^
+b0 ]
+bx \
+b0 [
+b0 Z
+b0 Y
+bx X
+b0 W
+b0 V
+b0 U
+b0 T
+b0 S
+b0 R
+b0 Q
+b0 P
+b0 O
+b0 N
+b0 M
+b0 L
+b0 K
+0J
+b0 I
+b0 H
+b0 G
+b0 F
+b0 E
+b0 D
+b0 C
+0B
+0A
+b0 @
+b0 ?
+0>
+0=
+b0 <
+b0 ;
+0:
+bx 9
+08
+x7
+bx 6
+bx 5
+b0 4
+b0 3
+02
+bx 1
+bx 0
+bx /
+bx .
+b0 -
+b0 ,
+b0 +
+bx *
+0)
+b0 (
+b0 '
+b0 &
+1%
+x$
+z#
+0"
+0!
+$end
+#50000
+b0x00 /
+b0x00 f
+b0x00 p
+b0 9
+b0 o
+07
+b100 1
+b100 j
+b100 n
+b0 0
+b0 l
+b0 .
+b0 b
+b0 g
+b0 h
+b0 k
+b0 <"
+b0 ;"
+b0 :"
+b0 9"
+b0 8"
+b0 7"
+b0 6"
+b0 5"
+b0 4"
+b0 3"
+b0 2"
+b0 1"
+b0 0"
+b0 /"
+b0 ."
+b0 -"
+b0 ,"
+b0 +"
+b0 *"
+b0 )"
+b0 ("
+b0 '"
+b0 &"
+b0 %"
+b0 $"
+b0 #"
+b0 ""
+b0 !"
+b0 ~
+b0 }
+b0 |
+b0 {
+b0 \
+b100000 w
+1!
+#100000
+0!
+#150000
+b101 (
+b101 t
+b1 _
+0%
+b101 ;
+b101 @
+b101 W
+b101 ]
+b101 ?
+b101 &
+b101 C
+b101 c
+1)
+1:
+b10x /
+b10x f
+b10x p
+b101 9
+b101 o
+b10011 F
+b10011 P
+b10011 S
+b101 r
+b101 0
+b101 l
+b101 3
+b101 d
+b101 m
+b101 z
+b10100000000000000010011 +
+b10100000000000000010011 a
+b10100000000000000010011 y
+b0 <"
+b0 ;"
+b0 :"
+b0 9"
+b0 8"
+b0 7"
+b0 6"
+b0 5"
+b0 4"
+b0 3"
+b0 2"
+b0 1"
+b0 0"
+b0 /"
+b0 ."
+b0 -"
+b0 ,"
+b0 +"
+b0 *"
+b0 )"
+b0 ("
+b0 '"
+b0 &"
+b0 %"
+b0 $"
+b0 #"
+b0 ""
+b0 !"
+b0 ~
+b0 }
+b0 |
+b0 {
+1"
+b100000 w
+1!
+#200000
+0!
+#250000
+b1 (
+b1 t
+b0 _
+b1 ;
+b1 @
+b1 W
+b1 ]
+b1 ?
+b1 &
+b1 C
+b1 c
+b1 r
+b1 3
+b1 d
+b1 m
+b1 z
+b100000000000000010011 +
+b100000000000000010011 a
+b100000000000000010011 y
+bx /
+bx f
+bx p
+bx 9
+bx o
+bx 1
+bx j
+bx n
+bx 0
+bx l
+b10x .
+b10x b
+b10x g
+b10x h
+b10x k
+1!
+#300000
+0!
+#350000
+x>
+x7
+xA
+bx Z
+bx Y
+bx _
+x)
+x%
+bx ;
+bx @
+bx W
+bx ]
+x=
+x:
+bx (
+bx t
+bx ?
+xB
+xJ
+bx ,
+bx [
+bx `
+bx e
+bx u
+bx -
+bx E
+bx v
+bx 4
+bx K
+bx U
+bx x
+x2
+bx '
+bx I
+bx T
+x8
+bx L
+bx Q
+bx V
+bx &
+bx C
+bx c
+bx G
+bx N
+bx H
+bx O
+bx F
+bx P
+bx S
+bx s
+bx r
+bx q
+b0 3
+b0 d
+b0 m
+b0 z
+bx +
+bx a
+bx y
+bx .
+bx b
+bx g
+bx h
+bx k
+1!
+#400000
+0!
+#450000
+1!
+#500000
+0!
+#550000
+1!
+#600000
+0!
+#650000
+1!
+#700000
+0!
+#750000
+1!
+#800000
+0!
+#850000
+1!
+#900000
+0!
+#950000
+1!
+#1000000
+0!
+#1050000
+1!
+#1100000
+0!
+#1150000
+1!
+#1200000
+0!
+#1250000
+1!
+#1300000
+0!
+#1350000
+1!
+#1400000
+0!
+#1450000
+1!
+#1500000
+0!
+#1550000
+1!
+#1600000
+0!
+#1650000
+1!
+#1700000
+0!
+#1750000
+1!
+#1800000
+0!
+#1850000
+1!
+#1900000
+0!
+#1950000
+1!
+#2000000
+0!
+#2050000
+1!
+#2100000
+0!
+#2150000
+1!
+#2200000
+0!
+#2250000
+1!
+#2300000
+0!
+#2350000
+1!
+#2400000
+0!
+#2450000
+1!
+#2500000
+0!
+#2550000
+1!
+#2600000
+0!
+#2650000
+1!

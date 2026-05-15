@@ -18,8 +18,8 @@ module Single_Cycle_Top(clk, rst);
     wire [31:0] ALUResult, ReadData, Result, SrcB;
     wire [31:0] PCPlus4, PCTarget, PC_Next; // PC Path Wires
     
-    wire RegWrite, MemWrite, ALUSrc, ResultSrc, Branch, Zero, PCSrc;
-    wire [1:0] ImmSrc;
+    wire RegWrite, MemWrite, ALUSrc, Branch, Zero, PCSrc, Jump;
+    wire [1:0] ImmSrc, ResultSrc;
     wire [2:0] ALUControl_Top;
 
     // Cache wires
@@ -29,8 +29,8 @@ module Single_Cycle_Top(clk, rst);
 
     // --- PC Logic ---
     
-    // PCSrc Decision: Jump if it's a Branch AND the ALU says Zero
-    assign PCSrc = Branch & Zero;
+    // PCSrc Decision: Jump if it's a Branch AND the ALU says Zero, or Jump instruction
+    assign PCSrc = (Branch & Zero) | Jump;
 
     // Standard PC+4 Adder
     PC_Adder PC_Adder_Plus4(
@@ -46,10 +46,14 @@ module Single_Cycle_Top(clk, rst);
         .c(PCTarget)
     );
 
+    wire [31:0] Actual_Jump_Target;
+    // If Opcode is JALR (1100111), take address from ALU. Else use PC Adder.
+    assign Actual_Jump_Target = (RD_Instr[6:0] == 7'b1100111) ? ALUResult : PCTarget;
+
     // Mux to select between PC+4 or Branch Target
     Mux PC_Mux(
         .a(PCPlus4),
-        .b(PCTarget),
+        .b(Actual_Jump_Target),
         .s(PCSrc),
         .c(PC_Next)
     );
@@ -139,12 +143,18 @@ module Single_Cycle_Top(clk, rst);
     //hit/miss
     assign Final_Mem_Data = (Cache_Hit) ? Cache_RD : ReadData;
 
-    // Select between ALU Result or Memory Data for Register Writeback
+    // Select between ALU Result, Memory Data, or PC+4 Register Writeback
+    assign Result = (ResultSrc == 2'b10) ? PCPlus4 : 
+                    (ResultSrc == 2'b01) ? Final_Mem_Data : 
+                    ALUResult;
+
+    /*
     Mux Mux_DataMemory_to_Register(
         .a(ALUResult),
         .b(ReadData),
         .s(ResultSrc),
         .c(Result)
     );
+    */
 
 endmodule
