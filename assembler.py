@@ -2,8 +2,7 @@ import re
 
 def assemble(asm_line):
     # Standard Opcodes
-    OP_R, OP_I, OP_B, OP_LOAD, OP_STORE = 0b0110011, 0b0010011, 0b1100011, 0b0000011, 0b0100011
-    
+    OP_R, OP_I, OP_B, OP_LOAD, OP_STORE, OP_JAL, OP_JALR = 0b0110011, 0b0010011, 0b1100011, 0b0000011, 0b0100011, 0b1101111, 0b1100111    
     
     # Register Alias Mapping
     reg_map = {

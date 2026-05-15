@@ -122,6 +122,7 @@ module Single_Cycle_Top(clk, rst);
         .MemWrite(MemWrite),
         .ResultSrc(ResultSrc),
         .Branch(Branch), // Connected to PCSrc Logic
+        .Jump(Jump),
         .ALUControl(ALUControl_Top)
     );
 
