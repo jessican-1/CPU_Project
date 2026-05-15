@@ -9,6 +9,10 @@ A custom RISC-V inspired single-cycle CPU architecture. This project implements 
 ## Simplfied CPU Diagram
 ![alt text](<Final project.png>)
 
+
+## Waveform Diagram
+![alt text](<Waveform.png>)
+
 ## Project Overview
 
 This repository contains the hardware description (Verilog/SystemVerilog) for a single-cycle RISC-V CPU and a custom Python-based assembler to bridge the gap between human-readable assembly and machine code.
