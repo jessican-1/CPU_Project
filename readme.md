@@ -1,3 +1,6 @@
+#VIDEO DEMONSTRATION FOR EC:
+https://drive.google.com/drive/folders/1bte9kv8f_ksPxGPG4Qw7CtXQ50jort4-?usp=sharing
+
 # RISC-Based CPU Implementation
 
 A custom RISC-V inspired single-cycle CPU architecture. This project implements a functional datapath including an ALU, Control Unit, Register File, and Data Memory, based on the principles outlined in the "RISC-V: From Transistors to AI" series.
